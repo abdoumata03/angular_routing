@@ -1,6 +1,25 @@
 <div class="card">
-    <div class="card-body">
-      <h5 class="card-title">Signup</h5>
-      <p class="card-text">Signup Page</p>
-    </div>
+  <div class="card-body">
+    <h5 class="card-title">Signup</h5>
+    <form #f1="ngForm" class="col-md-4">
+      <input
+        type="text"
+        type="text"
+        name="nom"
+        #nom="ngModel"
+        ngModel
+        required
+        minlength="3"
+      />
+      <div *ngIf="nom.errors">
+        <small class="text-danger" *ngIf="nom.errors['required']"
+          >Required Field</small
+        >
+        <small class="text-danger" *ngIf="nom.errors['minlength']"
+          >Minimum 3 characters</small
+        >
+      </div>
+      <p>{{ nom.value }}</p>
+    </form>
   </div>
+</div>
