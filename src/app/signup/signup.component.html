@@ -1,25 +1,124 @@
 <div class="card">
   <div class="card-body">
     <h5 class="card-title">Signup</h5>
-    <form #f1="ngForm" class="col-md-4">
+    <form #f1="ngForm" class="col col-md-4">
+      <label for="username">Username:</label>
       <input
         type="text"
         type="text"
-        name="nom"
-        #nom="ngModel"
+        name="username"
+        #username="ngModel"
+        ngModel
+        required
+        minlength="3"
+        maxlength="10"
+      />
+      <div *ngIf="username.errors && username.control.touched">
+        <small class="text-danger" *ngIf="username.errors['required']"
+          >Required Field</small
+        >
+        <small class="text-danger" *ngIf="username.errors['minlength']"
+          >Minimum 3 characters</small
+        >
+        <small class="text-danger" *ngIf="username.errors['maxlength']"
+          >Maximum 3 characters</small
+        >
+      </div>
+
+      <label for="password">Mot de passe (Password):</label>
+      <input
+        type="password"
+        id="password"
+        name="password"
+        #password="ngModel"
+        ngModel
+        required
+      />
+      <small *ngIf="password.errors?.['required'] " class="error-message"
+        >ce champs est obligatoire.</small
+      >
+
+      <label for="confirmPassword">Confirmation du mot de passe:</label>
+      <input
+        type="password"
+        id="confirmPassword"
+        name="confirmPassword"
+        #confirmPassword="ngModel"
+        ngModel
+        required
+      />
+      <small *ngIf="confirmPassword.errors?.['required'] " class="error-message"
+        >ce champs est obligatoire.</small
+      >
+      <small
+        *ngIf="
+          password.value !== confirmPassword.value &&
+          password.dirty &&
+          confirmPassword.dirty
+        "
+        class="error-message"
+      >
+        Les mots de passe ne correspondent pas.
+      </small>
+
+      <label for="country">Country:</label>
+      <select name="country" #country="ngModel" ngModel required>
+        <option value="" disabled>Select Country</option>
+        <option value="alg">Algeria</option>
+        <option value="fr">France</option>
+      </select>
+      <div *ngIf="country.errors && country.control.touched">
+        <small class="text-danger" *ngIf="country.errors['required']"
+          >Required Field</small
+        >
+      </div>
+      <label for="email">Email:</label>
+      <input
+        type="text"
+        type="text"
+        name="email"
+        email
+        #email="ngModel"
         ngModel
         required
         minlength="3"
       />
-      <div *ngIf="nom.errors">
-        <small class="text-danger" *ngIf="nom.errors['required']"
+      <div *ngIf="email.errors && email.control.touched">
+        <small class="text-danger" *ngIf="email.errors['email']">Email</small>
+      </div>
+      <div>
+        <label>Sexe:</label>
+        <div>
+          <label>
+            <input
+              type="radio"
+              name="gender"
+              value="male"
+              #gender="ngModel"
+              ngModel
+              required
+            />
+            Male
+          </label>
+        </div>
+        <div>
+          <label>
+            <input type="radio" name="gender" value="female" ngModel required />
+            Female
+          </label>
+        </div>
+      </div>
+      <div *ngIf="gender.errors && gender.control.touched">
+        <small class="text-danger" *ngIf="gender.errors['required']"
           >Required Field</small
         >
-        <small class="text-danger" *ngIf="nom.errors['minlength']"
-          >Minimum 3 characters</small
-        >
       </div>
-      <p>{{ nom.value }}</p>
+
+      <label for="terms">Terms:</label>
+      <input type="checkbox" name="terms" ngModel required />
+      I agree
+
+      <button type="submit" [disabled]="f1.invalid">Submit</button>
     </form>
   </div>
 </div>
